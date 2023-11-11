@@ -27,10 +27,30 @@
 
 use chrono::Local;
 use env_logger::Builder;
-use log::LevelFilter;
+use log::{debug, error, info, trace, warn, LevelFilter};
 
 use std::env;
+use std::ffi::CStr;
 use std::io::Write;
+
+
+#[no_mangle]
+#[allow(clippy::not_unsafe_ptr_arg_deref)]
+pub extern "C" fn test_rs_logging(message: *const libc::c_char) {
+    let cstr = unsafe { CStr::from_ptr(message) };
+    let string = cstr.to_str().unwrap();
+
+    trace!("{}", &string);
+    debug!("{}", &string);
+    info!("{}", &string);
+    warn!("{}", &string);
+    error!("{}", &string);
+}
+
+#[no_mangle]
+pub extern "C" fn init_rs_logging() {
+    init();
+}
 
 fn get_log_level_from_env() -> LevelFilter {
     match env::var("RUST_LOG") {
@@ -50,8 +70,7 @@ fn get_log_level_from_env() -> LevelFilter {
 
 pub fn init() {
     let log_level: LevelFilter = get_log_level_from_env();
-
-    Builder::new()
+    match Builder::new()
         .format(|buf, record| {
             writeln!(
                 buf,
@@ -62,5 +81,67 @@ pub fn init() {
             )
         })
         .filter(None, log_level)
-        .init();
+        .try_init() {
+        Ok(()) => {
+            debug!("logger initialized");
+        },
+        Err(e) => {
+            error!("tried to initialize logger but failed, {:?}", e);
+        },
+    };
+}
+
+
+#[cfg(test)]
+pub mod tests {
+
+    use super::*;
+    use log::{log_enabled, Level};
+
+    #[test]
+    fn test_get_log_level_from_env() {
+        env::remove_var("RUST_LOG");
+        let log_level: LevelFilter = get_log_level_from_env();
+        assert_eq!(LevelFilter::Warn, log_level);
+
+        env::set_var("RUST_LOG", "COOL_LOGGING_LEVEL");
+        let log_level: LevelFilter = get_log_level_from_env();
+        assert_eq!(LevelFilter::Warn, log_level);
+
+        env::set_var("RUST_LOG", "OFF");
+        let log_level: LevelFilter = get_log_level_from_env();
+        assert_eq!(LevelFilter::Off, log_level);
+
+        env::set_var("RUST_LOG", "TRACE");
+        let log_level: LevelFilter = get_log_level_from_env();
+        assert_eq!(LevelFilter::Trace, log_level);
+
+        env::set_var("RUST_LOG", "INFO");
+        let log_level: LevelFilter = get_log_level_from_env();
+        assert_eq!(LevelFilter::Info, log_level);
+
+        env::set_var("RUST_LOG", "WARN");
+        let log_level: LevelFilter = get_log_level_from_env();
+        assert_eq!(LevelFilter::Warn, log_level);
+
+        env::set_var("RUST_LOG", "WARNING");
+        let log_level: LevelFilter = get_log_level_from_env();
+        assert_eq!(LevelFilter::Warn, log_level);
+
+        env::set_var("RUST_LOG", "ERR");
+        let log_level: LevelFilter = get_log_level_from_env();
+        assert_eq!(LevelFilter::Error, log_level);
+
+        env::set_var("RUST_LOG", "ERROR");
+        let log_level: LevelFilter = get_log_level_from_env();
+        assert_eq!(LevelFilter::Error, log_level);
+    }
+
+    #[test]
+    #[ignore]
+    fn test_init() {
+        env::set_var("RUST_LOG", "TRACE");
+        init();
+        assert!(log_enabled!(Level::Trace));
+    }
 }

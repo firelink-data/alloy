@@ -25,43 +25,6 @@
 * Last updated: 2023-11-11
 */
 
+pub mod chunks;
 pub mod logging;
-
-use log::{debug, error, info, trace, warn};
-use std::ffi::CStr;
-
-#[no_mangle]
-pub extern "C" fn init_rs_logging() {
-    logging::init();
-}
-
-#[no_mangle]
-#[allow(clippy::not_unsafe_ptr_arg_deref)]
-pub extern "C" fn test_rs_logging(message: *const libc::c_char) {
-    let cstr = unsafe { CStr::from_ptr(message) };
-    let string = cstr.to_str().unwrap();
-
-    trace!("{}", &string);
-    debug!("{}", &string);
-    info!("{}", &string);
-    warn!("{}", &string);
-    error!("{}", &string);
-}
-
-#[cfg(test)]
-pub mod tests {
-
-    use super::*;
-    use std::ffi::CString;
-
-    #[test]
-    fn test_init_rs_logging() {
-        init_rs_logging();
-    }
-
-    #[test]
-    fn test_test_rs_logging() {
-        test_rs_logging(CString::new("cool code").unwrap().into_raw());
-    }
-}
 
