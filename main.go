@@ -37,5 +37,10 @@ import "C"
 
 func main() {
     fmt.Println("Hello from Go!");
+
+    C.test_rs_logging(C.CString("this should not be logged to stdout"));
+    C.init_rs_logging();
+    C.test_rs_logging(C.CString("this should be logged from Rust to stdout"));
+
     fmt.Println("Goodbye from Go!");
 }
