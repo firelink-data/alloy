@@ -22,25 +22,18 @@
 * SOFTWARE.
 *
 * File created: 2023-11-11
-* Last updated: 2023-11-11
+* Last updated: 2023-11-12
 */
 
 package main
 
-import "fmt"
-
-/*
-#cgo LDFLAGS: -L./lib -lalloy_rs
-#include "./lib/alloy.h"
-*/
-import "C"
+import (
+    "fmt"
+    "github.com/firelink-data/alloy/alloy.go"
+)
 
 func main() {
     fmt.Println("Hello from Go!");
-
-    C.test_rs_logging(C.CString("this should not be logged to stdout"));
-    C.init_rs_logging();
-    C.test_rs_logging(C.CString("this should be logged from Rust to stdout"));
 
     fmt.Println("Goodbye from Go!");
 }
