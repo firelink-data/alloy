@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: gomod
+    directory: ./alloy.go/
+    schedule:
+      interval: daily
+  - package-ecosystem: cargo
+    directory: ./alloy.rs/
+    schedule:
+      interval: daily
