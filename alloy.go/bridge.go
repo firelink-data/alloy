@@ -28,9 +28,9 @@
 package alloy
 
 import (
-	"github.com/apache/arrow/go/v10/arrow"
-	"github.com/apache/arrow/go/v10/cdata"
-	"github.com/apache/arrow/go/v10/arrow/memory"
+	"github.com/apache/arrow/go/arrow"
+    "github.com/apache/arrow/go/arrow/cdata"
+	"github.com/apache/arrow/go/arrow/memory"
 )
 
 /*
