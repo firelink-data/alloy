@@ -33,7 +33,7 @@ use log::info;
 
 
 #[no_mangle]
-pub extern "C" fn load_from_chunks(
+pub extern "C" fn alloy_read_array_chunks(
     arr_ptr: *const ffi::ArrowArray,
     sch_ptr: *const ffi::ArrowSchema,
     n_chunks: usize,

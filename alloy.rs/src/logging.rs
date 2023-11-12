@@ -22,7 +22,7 @@
 * SOFTWARE.
 *
 * File created: 2023-11-11
-* Last updated: 2023-11-11
+* Last updated: 2023-11-12
 */
 
 use chrono::Local;
@@ -35,8 +35,13 @@ use std::io::Write;
 
 
 #[no_mangle]
+pub extern "C" fn alloy_init_logging() {
+    init();
+}
+
+#[no_mangle]
 #[allow(clippy::not_unsafe_ptr_arg_deref)]
-pub extern "C" fn test_rs_logging(message: *const libc::c_char) {
+pub extern "C" fn alloy_test_logging(message: *const libc::c_char) {
     let cstr = unsafe { CStr::from_ptr(message) };
     let string = cstr.to_str().unwrap();
 
@@ -45,11 +50,6 @@ pub extern "C" fn test_rs_logging(message: *const libc::c_char) {
     info!("{}", &string);
     warn!("{}", &string);
     error!("{}", &string);
-}
-
-#[no_mangle]
-pub extern "C" fn init_rs_logging() {
-    init();
 }
 
 fn get_log_level_from_env() -> LevelFilter {
@@ -97,6 +97,7 @@ pub mod tests {
 
     use super::*;
     use log::{log_enabled, Level};
+    use std::ffi::CString;
 
     #[test]
     fn test_get_log_level_from_env() {
@@ -143,5 +144,15 @@ pub mod tests {
         env::set_var("RUST_LOG", "TRACE");
         init();
         assert!(log_enabled!(Level::Trace));
+    }
+
+    #[test]
+    fn test_alloy_init_logging() {
+        alloy_init_logging();
+    }
+
+    #[test]
+    fn test_alloy_test_logging() {
+        alloy_test_logging(CString::new("cool logging test").unwrap().into_raw());
     }
 }
