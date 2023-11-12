@@ -25,7 +25,7 @@
 * Last updated: 2023-11-12
 */
 
-package alloy
+package bridge
 
 import (
 	"github.com/apache/arrow/go/arrow"
