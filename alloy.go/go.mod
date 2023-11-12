@@ -1,3 +1,4 @@
-module alloy_go
+module alloy
 
 go 1.21.4
+

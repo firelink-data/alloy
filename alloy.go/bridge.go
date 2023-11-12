@@ -25,7 +25,7 @@
 * Last updated: 2023-11-12
 */
 
-package alloy_go
+package alloy
 
 import (
 	"github.com/apache/arrow/go/v10/arrow"
