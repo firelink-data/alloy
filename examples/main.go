@@ -29,11 +29,17 @@ package main
 
 import (
     "fmt"
+    "github.com/apache/arrow/go/arrow/memory"
     "github.com/firelink-data/alloy/alloy"
 )
 
 func main() {
     fmt.Println("Hello from Go!");
+
+    m := memory.NewGoAllocator();
+    b := alloy.NewBridge(m);
+
+    fmt.Printf("This is the arrow GoAllocator: %s", m);
 
     fmt.Println("Goodbye from Go!");
 }
