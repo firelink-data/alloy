@@ -40,7 +40,11 @@ import (
 import "C"
 
 type Bridge struct {
-    GoAllocator *memory.GoAllocator
+    GoAllocator *memory.GoAllocator;
+}
+
+func NewBridge(m *memory.GoAllocator) Bridge {
+    return Bridge{m};
 }
 
 /*
