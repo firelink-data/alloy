@@ -22,7 +22,7 @@
 * SOFTWARE.
 *
 * File created: 2023-11-12
-* Last updated: 2023-11-12
+* Last updated: 2023-11-13
 */
 
 package alloy
@@ -34,8 +34,8 @@ import (
 )
 
 /*
-#cgo LDFLAGS: -L${SRCDIR}/../lib -lalloy_rs
-#include ".${SRCDIR}../lib/alloy.h"
+#cgo LDFLAGS: -L${SRCDIR}/lib -lalloy_rs
+#include "${SRCDIR}/lib/alloy_chunks.h"
 */
 import "C"
 
@@ -57,7 +57,7 @@ func (bridge Bridge) FromChunks(arrays []arrow.Array) (int, error) {
         c_arrays = append(c_arrays, c_arr)
     }
 
-    num_chunks := C.load_from_chunks(
+    num_chunks := C.alloy_read_array_chunks(
         unsafe.Pointer(&c_arrays[0]),
         unsafe.Pointer(&c_schemas[0]),
         C.uintptr_t(len(c_schemas)),
