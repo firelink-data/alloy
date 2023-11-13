@@ -22,7 +22,13 @@
 * SOFTWARE.
 *
 * File created: 2023-11-12
-* Last updated: 2023-11-12
+* Last updated: 2023-11-13
 */
 
 package alloy
+
+import "fmt"
+
+func Hello() {
+    fmt.Println("Hello, from Alloy!");
+}

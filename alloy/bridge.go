@@ -28,8 +28,8 @@
 package alloy
 
 import (
-	"github.com/apache/arrow/go/arrow"
-    "github.com/apache/arrow/go/arrow/cdata"
+	// "github.com/apache/arrow/go/arrow"
+    // "github.com/apache/arrow/go/arrow/cdata"
 	"github.com/apache/arrow/go/arrow/memory"
 )
 
@@ -43,6 +43,7 @@ type Bridge struct {
     GoAllocator *memory.GoAllocator
 }
 
+/*
 func (bridge Bridge) FromChunks(arrays []arrow.Array) (int, error) {
     var c_schemas []cdata.CArrowSchema;
     var c_arrays []cdata.CArrowArray;
@@ -65,3 +66,4 @@ func (bridge Bridge) FromChunks(arrays []arrow.Array) (int, error) {
 
     return int(num_chunks), nil
 }
+*/
