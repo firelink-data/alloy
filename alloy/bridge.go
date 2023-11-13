@@ -21,19 +21,47 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 *
-* File created: 2023-11-11
-* Last updated: 2023-11-13
+* File created: 2023-11-12
+* Last updated: 2023-11-12
 */
 
-package main
+package alloy
 
 import (
-    "fmt"
-    "github.com/firelink-data/alloy/alloy"
+	"github.com/apache/arrow/go/arrow"
+    "github.com/apache/arrow/go/arrow/cdata"
+	"github.com/apache/arrow/go/arrow/memory"
 )
 
-func main() {
-    fmt.Println("Hello from Go!");
+/*
+#cgo LDFLAGS: -L${SRCDIR}/../lib -lalloy_rs
+#include ".${SRCDIR}../lib/alloy.h"
+*/
+import "C"
 
-    fmt.Println("Goodbye from Go!");
+type Bridge struct {
+    GoAllocator *memory.GoAllocator
+}
+
+func (bridge Bridge) FromChunks(arrays []arrow.Array) (int, error) {
+    var c_schemas []cdata.CArrowSchema;
+    var c_arrays []cdata.CArrowArray;
+
+    for idx, array := range arrays {
+        c_sch := cdata.CArrowSchema{};
+        c_arr := cdata.CArrowArray{};
+
+        cdata.ExportArrowArray(array, &c_arr, &c_sch);
+
+        c_schemas = append(c_schemas, c_sch)
+        c_arrays = append(c_arrays, c_arr)
+    }
+
+    num_chunks := C.load_from_chunks(
+        unsafe.Pointer(&c_arrays[0]),
+        unsafe.Pointer(&c_schemas[0]),
+        C.uintptr_t(len(c_schemas)),
+    );
+
+    return int(num_chunks), nil
 }

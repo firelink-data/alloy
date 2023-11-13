@@ -21,19 +21,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 *
-* File created: 2023-11-11
-* Last updated: 2023-11-13
+* File created: 2023-11-12
+* Last updated: 2023-11-12
 */
 
-package main
-
-import (
-    "fmt"
-    "github.com/firelink-data/alloy/alloy"
-)
-
-func main() {
-    fmt.Println("Hello from Go!");
-
-    fmt.Println("Goodbye from Go!");
-}
+void alloy_init_logging();
+void alloy_test_logging();

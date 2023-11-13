@@ -21,19 +21,15 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 *
-* File created: 2023-11-11
-* Last updated: 2023-11-13
+* File created: 2023-11-12
+* Last updated: 2023-11-12
 */
 
-package main
+#include <stdint.h>"
+#include "cdata/arrow/c/abi.h"
 
-import (
-    "fmt"
-    "github.com/firelink-data/alloy/alloy"
+unsigned alloy_read_array_chunks(
+    const struct ArrowArray *arr_ptr,
+    const struct ArrowSchema *arr_sch,
+    uintptr_t n_chunks,
 )
-
-func main() {
-    fmt.Println("Hello from Go!");
-
-    fmt.Println("Goodbye from Go!");
-}
