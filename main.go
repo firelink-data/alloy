@@ -29,7 +29,7 @@ package main
 
 import (
     "fmt"
-    "github.com/firelink-data/alloy/alloy"
+//    "github.com/firelink-data/alloy/alloy"
 )
 
 func main() {
