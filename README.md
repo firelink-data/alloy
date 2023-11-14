@@ -10,6 +10,7 @@
 </div>
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/firelink-data/alloy/alloy-go.svg)](https://pkg.go.dev/github.com/firelink-data/alloy/alloy-go)
+[![Crates.io (latest)](https://img.shields.io/crates/v/alloy-rs)](https://crates.io/crates/alloy-rs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://github.com/firelink-data/alloy/actions/workflows/tests.yml/badge.svg)](https://github.com/firelink-data/alloy/actions/workflows/tests.yml)
 
