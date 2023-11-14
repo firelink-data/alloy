@@ -78,3 +78,8 @@ pub unsafe fn read_data_from_array_ptr(
         Err(e) => panic!("could not import data from C ffi: {:?}", e),
     }
 }
+
+
+#[cfg(test)]
+pub mod tests {
+}
