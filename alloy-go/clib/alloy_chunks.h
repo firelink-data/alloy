@@ -32,4 +32,4 @@ unsigned alloy_read_array_chunks(
     const struct ArrowArray *arr_ptr,
     const struct ArrowSchema *arr_sch,
     uintptr_t n_chunks,
-)
+);
