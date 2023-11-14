@@ -28,7 +28,7 @@
 package alloy
 
 // #cgo LDFLAGS: -L ${SRCDIR}/clib -lalloy_rs
-// #include "${SRCDIR}/clib/alloy_logging.h"
+// #include "./clib/alloy_logging.h"
 import "C"
 
 func TestRustLogging() {
