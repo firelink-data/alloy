@@ -25,9 +25,9 @@ jobs:
           go-version: ${{ matrix.go }}
           cache: true
       - name: Go format
-        uses: Jerome1337/gofmt-action@v1.0.5
-        with:
-          gofmt-path: ./alloy-go
+        run: |
+          cd ./alloy-go
+          go fmt
 
   lint:
     name: Go lint
