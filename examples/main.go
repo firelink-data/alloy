@@ -35,8 +35,8 @@ import (
 func main() {
     fmt.Println("Hello from Go!");
 
-    alloy.Hello();
-    alloy.TestRustLogging();
+    alloy.InitLogging();
+    alloy.TestLogging("Hello Rust, sent from Golang!");
 
     fmt.Println("Goodbye from Go!");
 }

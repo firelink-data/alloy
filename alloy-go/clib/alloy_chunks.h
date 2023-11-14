@@ -28,8 +28,26 @@
 #include <stdint.h>
 #include "cdata/arrow/c/abi.h"
 
+/*
 unsigned alloy_read_array_chunks(
+    const struct ArrowSchema *sch_ptr,
     const struct ArrowArray *arr_ptr,
-    const struct ArrowSchema *arr_sch,
-    uintptr_t n_chunks,
-)
+    uintptr_t n_chunks
+);
+*/
+
+unsigned alloy_read_array_chunks(
+    void* sch_ptr,
+    void* arr_ptr,
+    uintptr_t n_array_chunks
+);
+
+/*
+unsigned alloy_read_array_chunks(
+    void* sch_ptr,
+    void* arr_ptr,
+    uintptr_t n_array_chunks
+) {
+    return alloy_read_array_chunks(sch_ptr, arr_ptr, n_array_chunks);
+};
+*/

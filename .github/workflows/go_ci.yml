@@ -1,0 +1,51 @@
+name: Go CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+    paths:
+      - ./alloy-go
+
+jobs:
+  format:
+    name: Go format
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        go: [ "1.21" ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install golang
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ matrix.go }}
+          cache: true
+      - name: Go format
+        run: |
+          cd ./alloy-go
+          go fmt
+
+  lint:
+    name: Go lint
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        go: [ "1.21" ] 
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install golang
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ matrix.go }}
+          cache: true
+      - name: Go lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          working-directory: ./alloy-go

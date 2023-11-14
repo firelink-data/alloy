@@ -1,0 +1,78 @@
+name: Rust CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+    paths:
+      - ./alloy-rs
+
+jobs:
+  check:
+    name: Cargo check
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
+        rust: [ stable, nightly ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          override: true
+      - name: Cargo check
+        run: |
+          cd ./alloy-rs
+          cargo check
+
+  format:
+    name: Cargo format
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        rust: [ stable ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          override: true
+      - name: Install rustfmt
+        run: rustup component add rustfmt
+      - name: Cargo format
+        run: |
+          cd ./alloy-rs
+          cargo fmt --all -- --check
+
+  lint:
+    name: Clippy lint
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        rust: [ stable ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          components: clippy
+          override: true
+      - name: Clippy lint
+        run: |
+          cd ./alloy-rs
+          cargo clippy --all-targets --all-features -- -D warnings

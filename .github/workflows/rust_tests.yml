@@ -1,9 +1,11 @@
-name: Tests
+name: Rust tests
 
 on:
   pull_request:
   push:
     branches: [ main ]
+    paths:
+      - ./alloy-rs
 
 jobs:
   tests:

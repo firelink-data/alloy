@@ -22,7 +22,7 @@
 * SOFTWARE.
 *
 * File created: 2023-11-11
-* Last updated: 2023-11-12
+* Last updated: 2023-11-14
 */
 
 use chrono::Local;
@@ -32,7 +32,6 @@ use log::{debug, error, info, trace, warn, LevelFilter};
 use std::env;
 use std::ffi::CStr;
 use std::io::Write;
-
 
 #[no_mangle]
 pub extern "C" fn alloy_init_logging() {
@@ -81,16 +80,16 @@ pub fn init() {
             )
         })
         .filter(None, log_level)
-        .try_init() {
+        .try_init()
+    {
         Ok(()) => {
             debug!("logger initialized");
-        },
+        }
         Err(e) => {
             error!("tried to initialize logger but failed, {:?}", e);
-        },
+        }
     };
 }
-
 
 #[cfg(test)]
 pub mod tests {

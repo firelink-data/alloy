@@ -23,7 +23,7 @@
 *
 * File created: 2023-11-14
 * Last updated: 2023-11-14
-*/
+ */
 
 package alloy
 
@@ -31,8 +31,10 @@ package alloy
 // #include "./clib/alloy_logging.h"
 import "C"
 
-func TestRustLogging() {
-    C.alloy_init_logging();
-    C.alloy_test_logging(C.CString("abcdefghijklmnopqrztuvwzyzåäö"));
+func InitLogging() {
+	C.alloy_init_logging()
 }
 
+func TestLogging(message string) {
+	C.alloy_test_logging(C.CString(message))
+}

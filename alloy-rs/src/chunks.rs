@@ -22,7 +22,7 @@
 * SOFTWARE.
 *
 * File created: 2023-11-11
-* Last updated: 2023-11-12
+* Last updated: 2023-11-14
 */
 
 use arrow2::array::Array;
@@ -31,33 +31,33 @@ use arrow2::ffi;
 use libc::c_uint;
 use log::info;
 
-
 #[no_mangle]
+#[allow(clippy::not_unsafe_ptr_arg_deref)]
 pub extern "C" fn alloy_read_array_chunks(
-    arr_ptr: *const ffi::ArrowArray,
     sch_ptr: *const ffi::ArrowSchema,
+    arr_ptr: *const ffi::ArrowArray,
     n_chunks: usize,
 ) -> c_uint {
-
     info!("reading raw pointers passed from C ffi now...");
 
     let mut data: Vec<Box<dyn Array>> = Vec::with_capacity(n_chunks);
-    
+
     unsafe {
         for chunk_idx in 0..n_chunks {
             let field = read_field_from_schema_ptr(&sch_ptr.add(chunk_idx).read());
-            let chunk = read_data_from_array_ptr(
-                arr_ptr.add(chunk_idx).read(),
-                field.data_type,
-            );
+            let chunk = read_data_from_array_ptr(arr_ptr.add(chunk_idx).read(), field.data_type);
             data.push(chunk);
         }
     }
-    
+
     // TODO: load this data to some DB?
     data.len() as c_uint
 }
 
+/// Imports a `Field` from the C data interface.
+/// # Safety
+/// This function relies on an `ArrowSchema` being valid according to the C data interface (FFI).
+/// See [arrow2](https://github.com/jorgecarleitao/arrow2/blob/main/src/ffi/mod.rs) for details.
 pub unsafe fn read_field_from_schema_ptr(schema: &ffi::ArrowSchema) -> Field {
     match ffi::import_field_from_c(schema) {
         Ok(f) => f,
@@ -65,6 +65,10 @@ pub unsafe fn read_field_from_schema_ptr(schema: &ffi::ArrowSchema) -> Field {
     }
 }
 
+/// Imports an `Array` from the C data interface.
+/// # Safety
+/// This function relies on an `ArrowArray` being valid according to the C data interface (FFI).
+/// See [arrow2](https://github.com/jorgecarleitao/arrow2/blob/main/src/ffi/mod.rs) for details.
 pub unsafe fn read_data_from_array_ptr(
     array: ffi::ArrowArray,
     data_type: DataType,
@@ -74,4 +78,3 @@ pub unsafe fn read_data_from_array_ptr(
         Err(e) => panic!("could not import data from C ffi: {:?}", e),
     }
 }
-
