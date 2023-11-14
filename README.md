@@ -1,3 +1,20 @@
+<div align="center">
+<br/>
+<div align="left">
+<br/>
+<p align="center">
+<a href="https://github.com/wilhelmagren/finq">
+<img align="center" width=75% src="https://github.com/firelink-data/alloy/blob/cd83e690cc0d73c42f2928bc7baefbcfc400dc24/docs/images/alloy-banner.png"></img>
+</a>
+</p>
+</div>
+
+[![Go Reference](https://pkg.go.dev/badge/github.com/firelink-data/alloy/alloy-go.svg)](https://pkg.go.dev/github.com/firelink-data/alloy/alloy-go)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Tests](https://github.com/firelink-data/alloy/actions/workflows/tests.yml/badge.svg)](https://github.com/firelink-data/alloy/actions/workflows/tests.yml)
+
+</div>
+
 ## 🔎 Overview
 *alloy* is a **Go module that enables calls to Rust code with Apache Arrow datatypes**, and vice versa.
 
@@ -25,4 +42,5 @@ package main
 </details>
 
 ## 📋 License
-All code is to be held under a general MIT license, please see [LICENSE](https://github.com/firelink-data/alloy/blob/main/LICENSE) for specific information.
+All firelink-data written code is to be held under a general MIT license, please see [LICENSE](https://github.com/firelink-data/alloy/blob/main/LICENSE) for specific information.
+All other code included in this repository are to be held under their respective licenses.
