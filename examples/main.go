@@ -22,24 +22,20 @@
 * SOFTWARE.
 *
 * File created: 2023-11-11
-* Last updated: 2023-11-13
+* Last updated: 2023-11-14
 */
 
 package main
 
 import (
     "fmt"
-    "github.com/apache/arrow/go/arrow/memory"
-    "github.com/firelink-data/alloy/alloy"
+    "github.com/firelink-data/alloy/alloy-go"
 )
 
 func main() {
     fmt.Println("Hello from Go!");
 
-    m := memory.NewGoAllocator();
-    b := alloy.NewBridge(m);
-
-    fmt.Printf("This is the arrow GoAllocator: %s", m);
+    alloy.Hello();
 
     fmt.Println("Goodbye from Go!");
 }
