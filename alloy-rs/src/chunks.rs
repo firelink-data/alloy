@@ -78,3 +78,16 @@ pub unsafe fn read_data_from_array_ptr(
         Err(e) => panic!("could not import data from C ffi: {:?}", e),
     }
 }
+
+#[cfg(test)]
+pub mod tests {
+
+    use super::*;
+
+    #[test]
+    #[should_panic]
+    fn test_alloy_read_array_chunks_all_empty() {
+        let _n_chunks_read: c_uint =
+            alloy_read_array_chunks(&ffi::ArrowSchema::empty(), &ffi::ArrowArray::empty(), 1);
+    }
+}

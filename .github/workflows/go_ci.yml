@@ -2,10 +2,11 @@ name: Go CI
 
 on:
   pull_request:
+    paths:
+      - "**/go.*"
+      - "**/**.go"
   push:
     branches: [ main ]
-    paths:
-      - ./alloy-go
 
 jobs:
   format:

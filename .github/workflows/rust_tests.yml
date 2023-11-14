@@ -2,6 +2,9 @@ name: Rust tests
 
 on:
   pull_request:
+    paths:
+      - "**/**.rs"
+      - "./alloy-rs/Cargo.toml"
   push:
     branches: [ main ]
     paths:

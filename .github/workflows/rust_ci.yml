@@ -2,10 +2,11 @@ name: Rust CI
 
 on:
   pull_request:
+    paths:
+      - "**/**.rs"
+      - "./alloy-rs/Cargo.toml"
   push:
     branches: [ main ]
-    paths:
-      - ./alloy-rs
 
 jobs:
   check:
