@@ -47,4 +47,3 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           working-directory: ./alloy-go
-
