@@ -29,17 +29,14 @@ package main
 
 import (
     "fmt"
+    "github.com/firelink-data/alloy/alloy-go"
 )
-
-// #cgo LDFLAGS: -L ../alloy-go/clib -lalloy_rs
-// #include "../alloy-go/clib/alloy_logging.h"
-import "C"
 
 func main() {
     fmt.Println("Hello from Go!");
 
-    C.alloy_init_logging();
-    C.alloy_test_logging(C.CString("abcdefgäöå"));
+    alloy.Hello();
+    alloy.TestRustLogging();
 
     fmt.Println("Goodbye from Go!");
 }
