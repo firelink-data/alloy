@@ -79,7 +79,6 @@ pub unsafe fn read_data_from_array_ptr(
     }
 }
 
-
 #[cfg(test)]
 pub mod tests {
 
