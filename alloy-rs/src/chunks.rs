@@ -22,7 +22,7 @@
 * SOFTWARE.
 *
 * File created: 2023-11-11
-* Last updated: 2023-11-12
+* Last updated: 2023-11-14
 */
 
 use arrow2::array::Array;
@@ -31,29 +31,24 @@ use arrow2::ffi;
 use libc::c_uint;
 use log::info;
 
-
 #[no_mangle]
 pub extern "C" fn alloy_read_array_chunks(
     arr_ptr: *const ffi::ArrowArray,
     sch_ptr: *const ffi::ArrowSchema,
     n_chunks: usize,
 ) -> c_uint {
-
     info!("reading raw pointers passed from C ffi now...");
 
     let mut data: Vec<Box<dyn Array>> = Vec::with_capacity(n_chunks);
-    
+
     unsafe {
         for chunk_idx in 0..n_chunks {
             let field = read_field_from_schema_ptr(&sch_ptr.add(chunk_idx).read());
-            let chunk = read_data_from_array_ptr(
-                arr_ptr.add(chunk_idx).read(),
-                field.data_type,
-            );
+            let chunk = read_data_from_array_ptr(arr_ptr.add(chunk_idx).read(), field.data_type);
             data.push(chunk);
         }
     }
-    
+
     // TODO: load this data to some DB?
     data.len() as c_uint
 }
@@ -74,4 +69,3 @@ pub unsafe fn read_data_from_array_ptr(
         Err(e) => panic!("could not import data from C ffi: {:?}", e),
     }
 }
-
