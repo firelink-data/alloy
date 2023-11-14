@@ -1,10 +1,9 @@
 ROOT := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
-.PHONY: build
-build:
+.PHONY: build-rust
+build-rust:
 	@cd ./alloy-rs && cargo build --release
-	@cp ./alloy-rs/target/release/liballoy_rs.so ./lib
-	go build -ldflags="-r $(ROOT)lib" main.go
+	@cp ./alloy-rs/target/release/liballoy_rs.a ./alloy-go/clib/
 
 .PHONY: test-rust
 test-rust:
@@ -25,3 +24,10 @@ format-rust:
 .PHONY: lint-rust
 lint-rust:
 	@cd ./alloy-rs && cargo clippy --fix
+
+.PHONY: clean-go
+clean-go:
+	@cd ./examples && go clean -cache && go clean -modcache
+
+.PHONY: clean-all
+clean-all: clean-go clean-rust
