@@ -22,8 +22,8 @@
 * SOFTWARE.
 *
 * File created: 2023-11-12
-* Last updated: 2023-11-12
+* Last updated: 2023-11-14
 */
 
 void alloy_init_logging();
-void alloy_test_logging();
+void alloy_test_logging(char* message);

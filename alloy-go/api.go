@@ -31,8 +31,8 @@ package alloy
 // #include "${SRCDIR}/clib/alloy_logging.h"
 import "C"
 
-func HelloFromRust() {
+func TestRustLogging() {
     C.alloy_init_logging();
-    C.alloy_test_logging();
+    C.alloy_test_logging(C.CString("abcdefghijklmnopqrztuvwzyzåäö"));
 }
 
