@@ -23,19 +23,18 @@
 *
 * File created: 2023-11-14
 * Last updated: 2023-11-14
-*/
+ */
 
 package alloy
-    
+
 // #cgo LDFLAGS: -L ${SRCDIR}/clib -lalloy_rs
 // #include "./clib/alloy_logging.h"
 import "C"
 
 func InitLogging() {
-    C.alloy_init_logging();
+	C.alloy_init_logging()
 }
 
 func TestLogging(message string) {
-    C.alloy_test_logging(C.CString(message));
+	C.alloy_test_logging(C.CString(message))
 }
-
