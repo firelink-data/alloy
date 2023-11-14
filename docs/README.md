@@ -1,0 +1,4 @@
+# *alloy* documentation
+
+...
+
