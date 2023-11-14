@@ -29,6 +29,9 @@ package alloy
 
 import (
     "errors"
+    "unsafe"
+	"github.com/apache/arrow/go/v14/arrow"
+	"github.com/apache/arrow/go/v14/arrow/cdata"
 	"github.com/apache/arrow/go/v14/arrow/memory"
 )
 
@@ -44,7 +47,7 @@ func (b Bridge) SendArrayAsChunks(arrays []arrow.Array) (int, error) {
     var c_schemas []cdata.CArrowSchema;
     var c_arrays []cdata.CArrowArray;
 
-    for idx, array := range arrays {
+    for _, array := range arrays {
         c_sch := cdata.CArrowSchema{};
         c_arr := cdata.CArrowArray{};
 
@@ -54,15 +57,15 @@ func (b Bridge) SendArrayAsChunks(arrays []arrow.Array) (int, error) {
         c_arrays = append(c_arrays, c_arr);
     }
 
-    num_chunks_read = int(C.alloy_read_array_chunks(
+    n_chunks_read := int(C.alloy_read_array_chunks(
         unsafe.Pointer(&c_schemas[0]),
         unsafe.Pointer(&c_arrays[0]),
         C.uintptr_t(len(c_schemas)),
     ))
 
-    if num_chunks_read != len(c_schemas) {
-        return num_chunks_read, errors.New("did not read all array chunks!")
+    if n_chunks_read != len(c_schemas) {
+        return n_chunks_read, errors.New("did not read all array chunks!")
     }
 
-    return num_chunks_read, nil
+    return n_chunks_read, nil
 }
