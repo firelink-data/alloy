@@ -87,10 +87,7 @@ pub mod tests {
     #[test]
     #[should_panic]
     fn test_alloy_read_array_chunks_all_empty() {
-        let _n_chunks_read: c_uint = alloy_read_array_chunks(
-            &ffi::ArrowSchema::empty(),
-            &ffi::ArrowArray::empty(),
-            1,
-        );
+        let _n_chunks_read: c_uint =
+            alloy_read_array_chunks(&ffi::ArrowSchema::empty(), &ffi::ArrowArray::empty(), 1);
     }
 }
