@@ -90,7 +90,7 @@ pub mod tests {
         let _n_chunks_read: c_uint = alloy_read_array_chunks(
             &ffi::ArrowSchema::empty(),
             &ffi::ArrowArray::empty(),
-            1 as usize,
+            1,
         );
     }
 }
