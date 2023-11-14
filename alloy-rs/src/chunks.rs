@@ -32,6 +32,7 @@ use libc::c_uint;
 use log::info;
 
 #[no_mangle]
+#[allow(clippy::not_unsafe_ptr_arg_deref)]
 pub extern "C" fn alloy_read_array_chunks(
     arr_ptr: *const ffi::ArrowArray,
     sch_ptr: *const ffi::ArrowSchema,
@@ -53,6 +54,10 @@ pub extern "C" fn alloy_read_array_chunks(
     data.len() as c_uint
 }
 
+/// Imports a `Field` from the C data interface.
+/// # Safety
+/// This function relies on an `ArrowSchema` being valid according to the C data interface (FFI).
+/// See [arrow2](https://github.com/jorgecarleitao/arrow2/blob/main/src/ffi/mod.rs) for details.
 pub unsafe fn read_field_from_schema_ptr(schema: &ffi::ArrowSchema) -> Field {
     match ffi::import_field_from_c(schema) {
         Ok(f) => f,
@@ -60,6 +65,10 @@ pub unsafe fn read_field_from_schema_ptr(schema: &ffi::ArrowSchema) -> Field {
     }
 }
 
+/// Imports an `Array` from the C data interface.
+/// # Safety
+/// This function relies on an `ArrowArray` being valid according to the C data interface (FFI).
+/// See [arrow2](https://github.com/jorgecarleitao/arrow2/blob/main/src/ffi/mod.rs) for details.
 pub unsafe fn read_data_from_array_ptr(
     array: ffi::ArrowArray,
     data_type: DataType,
