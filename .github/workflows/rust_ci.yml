@@ -2,10 +2,12 @@ name: Rust CI
 
 on:
   pull_request:
+    paths:
+      - "./alloy-rs"
   push:
     branches: [ main ]
     paths:
-      - ./alloy-rs
+      - "./alloy-rs"
 
 jobs:
   check:
