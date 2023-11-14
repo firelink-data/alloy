@@ -1,13 +1,15 @@
-name: Golang CI
+name: Go CI
 
 on:
   pull_request:
+    paths:
+      - ./alloy-go
   push:
     branches: [ main ]
 
 jobs:
   format:
-    name: Golang format
+    name: Go format
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -22,13 +24,13 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
           cache: true
-      - name: Golang format
+      - name: Go format
         uses: Jerome1337/gofmt-action@v1.0.5
         with:
           gofmt-path: ./alloy-go
 
   lint:
-    name: Golang lint
+    name: Go lint
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -43,7 +45,7 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
           cache: true
-      - name: Golang lint
+      - name: Go lint
         uses: golangci/golangci-lint-action@v2
         with:
           working-directory: ./alloy-go
