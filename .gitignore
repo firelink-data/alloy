@@ -1,9 +1,6 @@
 # Binaries for programs and plugins
 *.exe
 *.exe~
-*.dll
-*.so
-*.dylib
 
 # Test binary, built with `go test -c`
 *.test
@@ -19,5 +16,3 @@ vendor/
 debug/
 target/
 
-# Library of functions and headers referenced by C/C++ source
-*.a
