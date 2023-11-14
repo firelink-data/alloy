@@ -34,8 +34,8 @@ use log::info;
 #[no_mangle]
 #[allow(clippy::not_unsafe_ptr_arg_deref)]
 pub extern "C" fn alloy_read_array_chunks(
-    arr_ptr: *const ffi::ArrowArray,
     sch_ptr: *const ffi::ArrowSchema,
+    arr_ptr: *const ffi::ArrowArray,
     n_chunks: usize,
 ) -> c_uint {
     info!("reading raw pointers passed from C ffi now...");
