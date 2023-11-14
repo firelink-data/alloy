@@ -2,6 +2,13 @@
 name = "alloy-rs"
 version = "0.2.1"
 edition = "2021"
+description = "Static Rust library for working with the Apache Arrow ffi using any C supported language."
+authors = [
+    "Wilhelm Ågren <wilhelmagren98@gmail.com>",
+]
+license = "MIT"
+homepage = "https://github.com/firelink-data/alloy/tree/main"
+repository = "https://github.com/firelink-data/alloy/tree/main/alloy-rs"
 
 [lib]
 crate-type = [ "staticlib" ]
